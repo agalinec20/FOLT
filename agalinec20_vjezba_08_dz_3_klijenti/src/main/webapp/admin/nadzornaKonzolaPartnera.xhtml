@@ -1,0 +1,53 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+  <ui:define name="title">Konzola partnera</ui:define>
+  <ui:define name="content">
+    <h2>Nadzorna konzola partnera</h2>
+    <h:form id="konzForm">
+      <h:panelGroup style="margin-bottom: 1rem; display: inline-block;">
+        <h:commandButton value="Osvježi" styleClass="button-refresh">
+          <f:ajax listener="#{konzolaPartner.osvjezi}" render="statusTable"/>
+        </h:commandButton>
+      </h:panelGroup>
+      <h:dataTable id="statusTable"
+                   value="#{konzolaPartner.dijelovi}"
+                   var="dio"
+                   styleClass="status-table">
+        <h:column>
+          <f:facet name="header">ID</f:facet>
+          #{dio}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Status</f:facet>
+          <h:outputText value="#{konzolaPartner.status[dio]}"
+                        styleClass="#{konzolaPartner.status[dio] eq 'RADI' ? 'status-green' :
+                                      konzolaPartner.status[dio] eq 'PAUZA' ? 'status-yellow' :
+                                      'status-red'}"/>
+        </h:column>
+        <h:column>
+          <f:facet name="header">Upravljanje</f:facet>
+          <h:panelGroup>
+            <h:commandButton value="Pauza"
+                             styleClass="button-small"
+                             disabled="#{konzolaPartner.status[dio] ne 'RADI'}">
+              <f:ajax listener="#{konzolaPartner.pauziraj(dio)}" render="statusTable"/>
+            </h:commandButton>
+            <h:commandButton value="Start"
+                             styleClass="button-small"
+                             disabled="#{konzolaPartner.status[dio] ne 'PAUZA'}">
+              <f:ajax listener="#{konzolaPartner.pokreni(dio)}" render="statusTable"/>
+            </h:commandButton>
+          </h:panelGroup>
+        </h:column>
+      </h:dataTable>
+      
+      <h:panelGroup style="margin-top: 1rem; display: block;">
+        <h:commandButton value="Kraj rada poslužitelja" styleClass="button-danger">
+          <f:ajax listener="#{konzolaPartner.kraj}"/>
+        </h:commandButton>
+      </h:panelGroup>
+    </h:form>
+  </ui:define>
+</ui:composition>

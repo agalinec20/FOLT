@@ -1,0 +1,23 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Korisnici (REST)</ui:define>
+
+  <ui:define name="content">
+    <h2>Pregled korisnika (REST)</h2>
+
+    <h:dataTable value="#{adminKorisniciRest.korisnici}" var="k" border="1">
+      <h:column>
+        <f:facet name="header">Korisnik</f:facet>
+        <h:link outcome="korisnikDetalji">
+          <f:param name="id" value="#{k.korisnik()}"/>
+          #{k.korisnik()}
+        </h:link>
+      </h:column>
+      <h:column><f:facet name="header">Ime</f:facet>#{k.ime()}</h:column>
+      <h:column><f:facet name="header">Prezime</f:facet>#{k.prezime()}</h:column>
+    </h:dataTable>
+  </ui:define>
+</ui:composition>

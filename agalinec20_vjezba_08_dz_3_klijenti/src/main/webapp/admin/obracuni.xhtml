@@ -1,0 +1,52 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Obračuni po partneru</ui:define>
+
+  <ui:define name="content">
+    <h2>Obračuni u razdoblju</h2>
+
+    <h:form>
+      Partner:
+      <h:selectOneMenu value="#{adminObracuni.partnerId}">
+        <f:selectItems value="#{adminObracuni.partneri}" var="p"
+                       itemValue="#{p.id}" itemLabel="#{p.naziv}"/>
+      </h:selectOneMenu>
+      Od: <h:inputText value="#{adminObracuni.od}" >
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+          </h:inputText>
+      Do: <h:inputText value="#{adminObracuni.do}">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+          </h:inputText>
+      <h:commandButton value="Prikaži"
+                       action="#{adminObracuni.pretrazi}"/>
+
+      <h:dataTable value="#{adminObracuni.lista}" var="o" border="1"
+             rendered="#{not empty adminObracuni.lista}" style="margin-top:1rem">
+
+  <!-- Broj obračuna (RB) -->
+  <h:column>
+    <f:facet name="header">RB</f:facet>
+    #{o.rb}
+  </h:column>
+
+  <!-- Vrijeme -->
+  <h:column>
+    <f:facet name="header">Vrijeme</f:facet>
+    <h:outputText value="#{o.vrijeme}">
+      <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+    </h:outputText>
+  </h:column>
+
+  <!-- Iznos = cijena * količina -->
+  <h:column>
+    <f:facet name="header">Iznos</f:facet>
+    #{o.cijena * o.kolicina}
+  </h:column>
+</h:dataTable>
+
+    </h:form>
+  </ui:define>
+</ui:composition>

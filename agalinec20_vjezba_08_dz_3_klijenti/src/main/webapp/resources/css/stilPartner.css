@@ -1,0 +1,91 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fefae0;
+}
+.top {
+  background-color: #a8d5ba;
+  color: #2d4739;
+  padding: 20px;
+}
+.nav {
+  background-color: #f0e5c9;
+  width: 250px;
+  padding: 20px;
+  border-right: 2px solid #cfcfcf;
+  float: left;
+  height: 100%;
+  box-sizing: border-box;
+}
+.nav ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.nav li {
+  margin-bottom: 10px;
+}
+.nav a, .nav h\:link {
+  color: #3e553f;
+  text-decoration: none;
+}
+.nav a:hover, .nav h\:link:hover {
+  text-decoration: underline;
+}
+.center_content {
+  margin-left: 270px;
+  padding: 40px;
+  background-color: #f6fdf1;
+}
+h2 {
+  border-bottom: 1px solid #a1c89b;
+  padding-bottom: 5px;
+  color: #2d4739;
+}
+
+.status-table {
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.status-table th, .status-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.status-green {
+  color: green;
+  font-weight: bold;
+}
+
+.status-yellow {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-red {
+  color: red;
+  font-weight: bold;
+}
+
+.button-small {
+  margin-right: 5px;
+  padding: 4px 10px;
+  font-size: 0.85em;
+}
+
+.button-refresh {
+  background-color: #e3f3ff;
+  border: 1px solid #90caf9;
+  padding: 6px 12px;
+  font-weight: bold;
+}
+
+.button-danger {
+  background-color: #ffe3e3;
+  border: 1px solid #f44336;
+  padding: 6px 12px;
+  font-weight: bold;
+}
+

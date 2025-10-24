@@ -1,0 +1,38 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Zapis rada korisnika</ui:define>
+
+  <ui:define name="content">
+    <h2>Zapis rada u razdoblju</h2>
+
+    <h:form>
+      Korisnik:
+      <h:selectOneMenu value="#{adminZapisi.korisnik}">
+        <f:selectItems value="#{adminZapisi.korisnici}" var="k"
+                       itemValue="#{k.korisnik}" itemLabel="#{k.korisnik}"/>
+      </h:selectOneMenu>
+      Od: <h:inputText value="#{adminZapisi.od}">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+          </h:inputText>
+      Do: <h:inputText value="#{adminZapisi.do}">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+          </h:inputText>
+      <h:commandButton value="Prikaži"
+                       action="#{adminZapisi.pretrazi}"/>
+
+      <h:dataTable value="#{adminZapisi.lista}" var="z" border="1"
+                   rendered="#{not empty adminZapisi.lista}" style="margin-top:1rem">
+        <h:column><f:facet name="header">Vrijeme</f:facet>
+          <h:outputText value="#{z.vrijeme}">
+            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+          </h:outputText></h:column>
+        <h:column><f:facet name="header">Opis</f:facet>#{z.opisrada}</h:column>
+        <h:column><f:facet name="header">PC</f:facet>#{z.adresaracunala}</h:column>
+        <h:column><f:facet name="header">IP</f:facet>#{z.ipadresaracunala}</h:column>
+      </h:dataTable>
+    </h:form>
+  </ui:define>
+</ui:composition>

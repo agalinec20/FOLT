@@ -1,0 +1,20 @@
+<ui:composition template="predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html">
+
+  <ui:define name="title">Registracija</ui:define>
+
+  <ui:define name="content">
+    <h2>Registracija korisnika</h2>
+    <h:form>
+      <h:panelGrid columns="2">
+        <h:outputLabel value="Ime:"/><h:inputText value="#{noviKorisnik.ime}" required="true"/>
+        <h:outputLabel value="Prezime:"/><h:inputText value="#{noviKorisnik.prezime}" required="true"/>
+        <h:outputLabel value="Korisničko ime:"/><h:inputText value="#{noviKorisnik.korisnickoIme}" required="true"/>
+        <h:outputLabel value="E-mail:"/><h:inputText value="#{noviKorisnik.email}" required="true"/>
+        <h:outputLabel value="Lozinka:"/><h:inputSecret value="#{noviKorisnik.lozinka}" required="true"/>
+      </h:panelGrid>
+      <h:commandButton value="Spremi" action="#{noviKorisnik.spremi}"/>
+    </h:form>
+  </ui:define>
+</ui:composition>

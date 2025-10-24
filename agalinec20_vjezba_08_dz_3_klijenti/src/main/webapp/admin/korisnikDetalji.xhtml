@@ -1,0 +1,27 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html">
+
+  <ui:define name="title">Detalji korisnika</ui:define>
+
+  <ui:define name="content">
+    <h2>Detalji korisnika</h2>
+
+    <h:panelGrid columns="2" rendered="#{adminKorisnikDetalji.korisnik ne null}">
+      <h:outputText value="Korisnik:"/>
+      <h:outputText value="#{adminKorisnikDetalji.korisnik.korisnik()}"/>
+
+      <h:outputText value="Ime:"/>
+      <h:outputText value="#{adminKorisnikDetalji.korisnik.ime()}"/>
+
+      <h:outputText value="Prezime:"/>
+      <h:outputText value="#{adminKorisnikDetalji.korisnik.prezime()}"/>
+
+      <h:outputText value="E-mail:"/>
+      <h:outputText value="#{adminKorisnikDetalji.korisnik.email()}"/>
+    </h:panelGrid>
+
+    <h:link outcome="korisniciRest" value="&#171; natrag na popis"/>
+
+  </ui:define>
+</ui:composition>

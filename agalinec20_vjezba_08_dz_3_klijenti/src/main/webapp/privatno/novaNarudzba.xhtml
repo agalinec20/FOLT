@@ -1,0 +1,79 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Nova narudžba</ui:define>
+
+  <ui:define name="content">
+    <h2>Nova narudžba</h2>
+
+    <ui:fragment rendered="#{!prijavaKorisnika.partnerOdabran}">
+      <h:outputText value="Partner nije odabran."/>
+    </ui:fragment>
+
+    <ui:fragment rendered="#{prijavaKorisnika.partnerOdabran}">
+    <!-- BLOK 1: forma -->
+    <h:form id="frm">
+
+      <!-- gumb za pokretanje narudžbe / plaćanje -->
+      <h:panelGroup layout="block" style="margin-bottom:1rem">
+        <h:commandButton value="Započni narudžbu"
+                         action="#{novaNarudzba.novaNarudzba}"
+                         rendered="#{!novaNarudzba.narudzbaAktivna}"/>
+        <h:commandButton value="Plati narudžbu"
+                         action="#{novaNarudzba.plati}"
+                         rendered="#{novaNarudzba.narudzbaAktivna}"/>
+      </h:panelGroup>
+
+      <!-- odabir jela -->
+      <h:panelGroup layout="block" style="margin-bottom:1rem">
+        <h:selectOneMenu value="#{novaNarudzba.jeloId}">
+          <f:selectItems value="#{novaNarudzba.jelovnik}" var="j"
+                         itemValue="#{j.id()}"
+                         itemLabel="#{j.naziv()} (#{j.cijena()} kn)"/>
+        </h:selectOneMenu>
+        <h:inputText value="#{novaNarudzba.kolicinaJ}" size="3">
+          <f:validateLongRange minimum="1" maximum="100"/>
+        </h:inputText>
+        <h:commandButton value="Dodaj jelo"
+                         action="#{novaNarudzba.dodajJelo}"
+                         disabled="#{!novaNarudzba.narudzbaAktivna}"/>
+      </h:panelGroup>
+
+      <!-- odabir pića -->
+      <h:panelGroup layout="block">
+        <h:selectOneMenu value="#{novaNarudzba.piceId}">
+          <f:selectItems value="#{novaNarudzba.karta}" var="p"
+                         itemValue="#{p.id()}"
+                         itemLabel="#{p.naziv()} #{p.kolicina()} ml (#{p.cijena()} kn)"/>
+        </h:selectOneMenu>
+        <h:inputText value="#{novaNarudzba.kolicinaP}" size="3">
+          <f:validateLongRange minimum="1" maximum="100"/>
+        </h:inputText>
+        <h:commandButton value="Dodaj piće"
+                         action="#{novaNarudzba.dodajPice}"
+                         disabled="#{!novaNarudzba.narudzbaAktivna}"/>
+      </h:panelGroup>
+
+    </h:form>
+
+    <!-- BLOK 2: pregled naručenog -->
+    <h:panelGrid columns="2" columnClasses="col1,col2" style="margin-top:2rem"
+                 rendered="#{novaNarudzba.narudzbaAktivna}">
+      <!-- jela -->
+      <h:dataTable value="#{novaNarudzba.narucenaJela}" var="j" border="1">
+        <h:column><f:facet name="header">Naziv</f:facet>#{j.naziv()}</h:column>
+        <h:column><f:facet name="header">Cijena</f:facet>#{j.cijena()} kn</h:column>
+      </h:dataTable>
+
+      <!-- pića -->
+      <h:dataTable value="#{novaNarudzba.narucenaPica}" var="p" border="1">
+        <h:column><f:facet name="header">Naziv</f:facet>#{p.naziv()}</h:column>
+        <h:column><f:facet name="header">Zapremn.</f:facet>#{p.kolicina()} ml</h:column>
+        <h:column><f:facet name="header">Cijena</f:facet>#{p.cijena()} kn</h:column>
+      </h:dataTable>
+    </h:panelGrid>
+    </ui:fragment>
+  </ui:define>
+</ui:composition>

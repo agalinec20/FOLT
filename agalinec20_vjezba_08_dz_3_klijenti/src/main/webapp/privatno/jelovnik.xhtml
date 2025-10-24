@@ -1,0 +1,22 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Jelovnik</ui:define>
+
+  <ui:define name="content">
+    <h2>Jelovnik partnera</h2>
+
+    <ui:fragment rendered="#{!pregledPonude.partnerOdabran}">
+      <h:outputText value="Partner nije odabran."/>
+    </ui:fragment>
+
+    <ui:fragment rendered="#{pregledPonude.partnerOdabran}">
+      <h:dataTable value="#{pregledPonude.jelovnik}" var="j" border="1">
+        <h:column><f:facet name="header">Naziv</f:facet>#{j.naziv()}</h:column>
+        <h:column><f:facet name="header">Cijena</f:facet>#{j.cijena()} kn</h:column>
+      </h:dataTable>
+    </ui:fragment>
+  </ui:define>
+</ui:composition>

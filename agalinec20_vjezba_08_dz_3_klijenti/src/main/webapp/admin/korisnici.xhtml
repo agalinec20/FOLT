@@ -1,0 +1,35 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Pregled korisnika</ui:define>
+
+  <ui:define name="content">
+    <h2>Pregled korisnika</h2>
+
+    <h:form>
+      <h:panelGrid columns="4" cellpadding="4">
+        <h:outputLabel value="Ime:"/>
+        <h:inputText value="#{adminKorisnici.ime}" />
+
+        <h:outputLabel value="Prezime:"/>
+        <h:inputText value="#{adminKorisnici.prezime}" />
+
+        <h:panelGroup/>
+        <h:commandButton value="Pretraži"
+                         action="#{adminKorisnici.pretrazi}"/>
+      </h:panelGrid>
+
+      <h:panelGroup rendered="#{not empty adminKorisnici.rezultat}"
+                    layout="block" style="margin-top:1rem">
+        <h:dataTable value="#{adminKorisnici.rezultat}" var="k" border="1">
+          <h:column><f:facet name="header">Korisnik</f:facet>#{k.korisnik}</h:column>
+          <h:column><f:facet name="header">Ime</f:facet>#{k.ime}</h:column>
+          <h:column><f:facet name="header">Prezime</f:facet>#{k.prezime}</h:column>
+          <h:column><f:facet name="header">E-mail</f:facet>#{k.email}</h:column>
+        </h:dataTable>
+      </h:panelGroup>
+    </h:form>
+  </ui:define>
+</ui:composition>

@@ -1,0 +1,22 @@
+<ui:composition template="/predlozak.xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core">
+
+  <ui:define name="title">Spavanje poslužitelja</ui:define>
+
+  <ui:define name="content">
+    <h2>Aktiviraj spavanje PoslužiteljPartnera</h2>
+
+    <h:form>
+      <h:outputLabel for="ms" value="Trajanje (ms): "/>
+      <h:inputText id="ms" value="#{adminSpavanje.trajanje}" size="6">
+        <f:validateLongRange minimum="1"/>
+      </h:inputText>
+
+      <h:commandButton value="Pošalji"
+                       action="#{adminSpavanje.pokreni}"/>
+      <h:messages globalOnly="true"/>
+    </h:form>
+  </ui:define>
+</ui:composition>

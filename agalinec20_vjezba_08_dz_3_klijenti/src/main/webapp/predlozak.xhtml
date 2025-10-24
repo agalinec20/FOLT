@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+  <h:outputStylesheet library="css" name="stilPartner.css" />
+  <title><ui:insert name="title"/></title>
+</h:head>
+<h:body>
+  <div id="top" class="top">
+    <div>
+      <p>
+        Sveučilište u Zagrebu<br />
+        Fakultet organizacije i informatike<br />
+        Napredne web tehnologije i servisi<br />
+      </p>
+    </div>
+    <ui:insert name="top">
+      <h:panelGroup id="prijavljlenKorisnik" rendered="#{prijavaKorisnika.prijavljen}">
+        <h:outputText value="Prijavljen korisnik: " />
+        <h:outputText style="color: #fcd34d"
+                      value="#{prijavaKorisnika.ime} #{prijavaKorisnika.prezime}" />
+        <h:form>
+          <h:link outcome="/privatno/odjavaKorisnika.xhtml" value="Odjava korisnika" />
+        </h:form>
+        <br />
+        <ui:fragment rendered="#{prijavaKorisnika.partnerOdabran}">
+          <h:outputText value="Odabrani restoran/partner " />
+          <h:outputText style="color: #fcd34d"
+                        value="#{prijavaKorisnika.odabraniPartner.naziv()} - #{prijavaKorisnika.odabraniPartner.vrstaKuhinje()}" />
+        </ui:fragment>
+      </h:panelGroup>
+    </ui:insert>
+  </div>
+
+  <div id="nav" class="nav">
+    <h:form prependId="false">
+      <ul>
+        <li><strong>Javni dio</strong></li>
+        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/mvc/tvrtka/pocetak">Početna stranica Tvrtka</h:outputLink>
+
+        <li><h:link value="Provjera poslužitelja" outcome="/provjeraPosluzitelja.xhtml"/></li>
+        <li><h:link value="Novi korisnik" outcome="/noviKorisnik.xhtml"/></li>
+
+        <ui:fragment rendered="#{request.userPrincipal == null}">
+          <li><h:link value="Prijava" outcome="/prijavaKorisnika.xhtml"/></li>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{request.isUserInRole('nwtis')}">
+          <li><strong>Privatni dio</strong></li>
+          <li><h:link value="Promijeni partnera" outcome="/privatno/odaberiPartnera.xhtml"/></li>
+          <li><h:link value="Jelovnik" outcome="/privatno/jelovnik.xhtml"/></li>
+          <li><h:link value="Karta pića" outcome="/privatno/kartaPica.xhtml"/></li>
+          <ui:fragment rendered="#{prijavaKorisnika.partnerOdabran and not novaNarudzba.narudzbaAktivna}">
+            <li><h:link value="Nova narudžba" outcome="/privatno/novaNarudzba.xhtml"/></li>
+          </ui:fragment>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{request.isUserInRole('admin')}">
+          <li><strong>Administracijski dio</strong></li>
+          <li><h:link value="Konzola partnera" outcome="/admin/nadzornaKonzolaPartnera.xhtml"/></li>
+          <li><h:link value="Spavanje poslužitelja" outcome="/admin/spavanje.xhtml"/></li>
+          <li><h:link value="Pregled korisnika" outcome="/admin/korisnici.xhtml"/></li>
+          <li><h:link value="Korisnici (REST)" outcome="/admin/korisniciRest.xhtml"/></li>
+          <li><h:link value="Obračuni" outcome="/admin/obracuni.xhtml"/></li>
+          <li><h:link value="Zapisi rada" outcome="/admin/zapisi.xhtml"/></li>
+        </ui:fragment>
+      </ul>
+    </h:form>
+  </div>
+
+  <div id="content" class="center_content">
+    <ui:insert name="content" />
+  </div>
+</h:body>
+</html>
